@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nosso Amor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary:#ff5a8c; /* cor principal (rosa) */
+      --bg:#fff0f5;      /* fundo clarinho rosa-lilás */
+      --text:#4a4a4a;    /* texto cinza escuro suave */
+      --shadow:rgba(255,90,140,0.3);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    /* 🔹 HERO SECTION */
+    header.hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 50px rgba(255,90,140,0.3);
+      background: var(--bg);
+    }
+    header.hero video#bgVideo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      filter: brightness(0.7) saturate(0.7) contrast(0.9);
+      z-index: 0;
+    }
+    header.hero::after {
+      /* leve escurecida extra para garantir leitura */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.15);
+      z-index: 1;
+    }
+    header.hero h1 {
+      position: relative;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      text-align: center;
+      color: #fff;
+      max-width: 90%;
+      line-height: 1.2;
+      animation: fadeIn 3s ease forwards;
+      opacity: 0;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* 🔹 GALERIA SCROLL HORIZONTAL */
+    .gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1rem;
+      padding: 2rem 1rem 3rem;
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 25px rgba(255,90,140,0.15);
+      max-width: 1200px;
+      margin: 2rem auto 3rem;
+    }
+    .gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+    .gallery::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+    .gallery img {
+      flex: 0 0 80%;
+      max-width: 500px;
+      border-radius: 1.5rem;
+      scroll-snap-align: center;
+      object-fit: cover;
+      height: calc(80vw);
+      max-height: 650px;
+      box-shadow: 0 8px 15px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 25px var(--shadow);
+    }
+
+    /* 🔹 INTERAÇÃO (botão coração) */
+    .interaction {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .heart-btn {
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 6px 12px rgba(255,90,140,0.3);
+    }
+    .heart-btn:hover {
+      background: #e14a76;
+      transform: scale(1.1);
+      box-shadow: 0 10px 20px rgba(225,74,118,0.4);
+    }
+    #secret {
+      display: none;
+      margin-top: 1.5rem;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      color: var(--primary);
+      font-weight: 600;
+      text-shadow: 1px 1px 3px rgba(255,90,140,0.5);
+    }
+
+    /* 🔹 CORAÇÕES FLUTUANTES */
+    .heart {
+      position: absolute;
+      bottom: -2rem;
+      width: 1rem; height: 1rem;
+      background: var(--primary);
+      transform: rotate(45deg);
+      animation: floats 6s linear infinite;
+      filter: drop-shadow(0 0 2px rgba(255,90,140,0.7));
+      z-index: 0;
+    }
+    .heart::before, .heart::after {
+      content: '';
+      position: absolute;
+      width: 1rem; height: 1rem;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    .heart::before { top: -0.5rem; left: 0; }
+    .heart::after { top: 0; left: -0.5rem; }
+    @keyframes floats {
+      0% {opacity: 1; transform: translateY(0) rotate(45deg);}
+      100% {opacity: 0; transform: translateY(-100vh) rotate(45deg);}
+    }
+
+    /* 🔹 BOTÃO DE MÚSICA FIXO */
+    .music-btn {
+      position: fixed;
+      bottom: 1rem; right: 1rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 3.5rem; height: 3.5rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: pulse 2.5s ease-in-out infinite;
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+    .music-btn:hover {
+      background-color: #e14a76;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* 🔹 RESPONSIVIDADE (>=768px) */
+    @media (min-width: 768px) {
+      .gallery img {
+        flex: 0 0 30%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO COM VIDEO DE FUNDO E FRASE PRINCIPAL -->
+  <header class="hero">
+    <video autoplay muted loop playsinline id="bgVideo" src="images/video.mp4"></video>
+    <h1>"Te amo de maize Momo"</h1>
+  </header>
+
+  <!-- GALERIA DE FOTOS -->
+  <section class="gallery">
+    <img src="images/photo2.jpeg" alt="Momentos nossos" />
+    <img src="images/photo3.jpeg" alt="Momentos nossos" />
+    <img src="images/photo4.jpeg" alt="Momentos nossos" />
+    <img src="images/photo5.jpeg" alt="Momentos nossos" />
+    <img src="images/photo6.jpeg" alt="Momentos nossos" />
+  </section>
+
+  <!-- BOTÃO CLICÁVEL + FRASE SECRETA -->
+  <section class="interaction">
+    <button class="heart-btn" onclick="revealMessage()">💖 Clique para uma surpresa</button>
+    <p id="secret">"Desde que você chegou, todos os meus dias são Dia dos Namorados"</p>
+  </section>
+
+  <!-- BOTÃO DE MÚSICA -->
+  <button class="music-btn" onclick="toggleMusic()">🎵</button>
+  <audio id="loveSong" src="images/song.mp3" loop></audio>
+
+  <script>
+    /* MOSTRA / ESCONDE A FRASE SECRETA */
+    function revealMessage() {
+      const secret = document.getElementById('secret');
+      secret.style.display = secret.style.display === 'block' ? 'none' : 'block';
+    }
+
+    /* TOGGLE DA MÚSICA */
+    function toggleMusic() {
+      const audio = document.getElementById('loveSong');
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    /* GERADOR DE CORAÇÕES */
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 700);
+  </script>
+</body>
+</html>
